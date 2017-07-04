@@ -4,7 +4,10 @@
            description="${%description.pattern('http://ant.apache.org/manual/Types/fileset.html')}">
 	<f:textbox />
   </f:entry>
-  <f:advanced>
-    <u:advanced id="androidLint"/>
-  </f:advanced>
+  <u:health id="androidLint" />
+  <u:thresholds id="androidLint" />
+  <u:defaultEncoding id="androidLint" />
+  <f:entry title="${%Trend graph}">
+    <a href="descriptorByName/LintPublisher/configureDefaults">${%configure}</a>
+  </f:entry>
 </j:jelly>

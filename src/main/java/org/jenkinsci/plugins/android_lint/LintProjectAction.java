@@ -3,6 +3,9 @@ package org.jenkinsci.plugins.android_lint;
 import hudson.model.AbstractProject;
 import hudson.plugins.analysis.core.ResultAction;
 import hudson.plugins.analysis.core.AbstractProjectAction;
+import hudson.plugins.analysis.core.PluginDescriptor;
+import hudson.plugins.analysis.graph.BuildResultGraph;
+import java.util.List;
 
 /**
  * Entry point to visualize the trend graph in the project screen.
@@ -10,6 +13,15 @@ import hudson.plugins.analysis.core.AbstractProjectAction;
  * Drawing of the graph is delegated to the associated {@link ResultAction}.
  */
 public class LintProjectAction extends AbstractProjectAction<ResultAction<LintResult>> {
+
+    /**
+     * Returns all the graphs.
+     *
+     * @return the graphs
+     */
+    public static List<BuildResultGraph> getAllGraphs() {
+        return new LintProjectAction(null, null).getAvailableGraphs();
+    }
 
     /**
      * Instantiates a new {@link LintProjectAction}.
@@ -28,9 +40,14 @@ public class LintProjectAction extends AbstractProjectAction<ResultAction<LintRe
      */
     public LintProjectAction(final AbstractProject<?, ?> project,
             final Class<? extends ResultAction<LintResult>> type) {
-        super(project, type, new LintDescriptor());
+        super(project, LintResultAction.class,
+                Messages._AndroidLint_ProjectAction_Name(), Messages._AndroidLint_ProjectAction_TrendName(),
+                LintDescriptor.PLUGIN_NAME,
+                LintDescriptor.ACTION_ICON,
+                LintDescriptor.RESULT_URL);
     }
 
+    @Override
     public String getDisplayName() {
         return Messages.AndroidLint_ProjectAction_Name();
     }
